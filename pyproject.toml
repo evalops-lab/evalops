@@ -50,3 +50,7 @@ addopts = "--cov=evalops --cov-branch --cov-report=term-missing --cov-fail-under
 # --cov-branch          compter aussi les branches des if/else
 # --cov-report=...      afficher les lignes NON testées
 # --cov-fail-under=80   faire échouer les tests si la couverture passe sous 80 %
+
+[[tool.uv.index]]
+url = "https://pypi.org/simple"
+default = true
