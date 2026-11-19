@@ -1,0 +1,19 @@
+repos:                                # liste des sources de hooks
+  - repo: local                       # "local" = on utilise les outils déjà installés dans le projet
+    hooks:                            # (mêmes versions que la CI, rien à télécharger en plus)
+      - id: ruff-check                # 1er hook : le linter
+        name: ruff check              # nom affiché pendant le commit
+        entry: uv run ruff check --fix   # commande lancée (--fix corrige ce qui peut l'être automatiquement)
+        language: system              # "lance la commande telle quelle"
+        types: [python]               # seulement si des fichiers .py sont dans le commit
+      - id: ruff-format               # 2e hook : le formatage
+        name: ruff format
+        entry: uv run ruff format
+        language: system
+        types: [python]
+      - id: mypy                      # 3e hook : les types
+        name: mypy
+        entry: uv run mypy src tests
+        language: system
+        types: [python]
+        pass_filenames: false         # mypy vérifie tout src/ et tests/, pas seulement les fichiers modifiés

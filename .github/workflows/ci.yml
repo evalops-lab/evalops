@@ -1,0 +1,22 @@
+name: CI                          # nom du workflow, affiché sur GitHub
+
+on:                               # QUAND lancer la CI :
+  pull_request:                   #   à chaque PR (ouverture et chaque nouveau push dessus)
+  push:
+    branches: [main]              #   et à chaque push sur main (après un merge)
+
+jobs:                             # ce qu'il faut faire (un "job" = une série d'étapes sur une machine)
+  quality-and-tests:              # nom du job ← retiens-le, on en a besoin à l'étape 10h
+    runs-on: ubuntu-latest        # GitHub prête une machine Ubuntu neuve, à chaque fois
+    steps:                        # les étapes, dans l'ordre :
+      - uses: actions/checkout@v4 # 1. télécharger le code du repo sur la machine
+                                  #    ("uses" = une action toute faite, "@v4" = sa version)
+      - uses: astral-sh/setup-uv@v6   # 2. installer uv
+        with:
+          enable-cache: true      #    garder un cache des bibliothèques pour aller plus vite
+      - run: uv sync --locked     # 3. installer exactement les versions de uv.lock
+                                  #    (--locked = échouer si uv.lock n'est pas à jour)
+      - run: uv run ruff check .        # 4. linter
+      - run: uv run ruff format --check .   # 5. formatage
+      - run: uv run mypy src tests      # 6. types
+      - run: uv run pytest              # 7. tests + couverture

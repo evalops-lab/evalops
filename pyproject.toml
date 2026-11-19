@@ -1,0 +1,52 @@
+[project]
+name = "evalops"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+authors = [
+    { name = "Massinissa Smail", email = "smailmassinissa13@gmail.com" }
+]
+requires-python = ">=3.13"
+dependencies = []
+
+[project.scripts]
+evalops = "evalops:main"
+
+[build-system]
+requires = ["uv_build>=0.13.7,<0.14.0"]
+build-backend = "uv_build"
+
+[dependency-groups]
+dev = [
+    "mypy>=2.4.1",
+    "pre-commit>=4.7.0",
+    "pytest>=9.2.0",
+    "pytest-cov>=7.1.0",
+    "ruff>=0.17.4",
+]
+
+[tool.ruff]                       # réglages de ruff
+line-length = 100                 # longueur max d'une ligne de code (en caractères)
+target-version = "py313"          # écrire du code pour Python 3.13
+
+[tool.ruff.lint]                  # quelles familles de règles le linter applique :
+select = ["E", "F", "I", "B", "UP", "SIM", "RUF"]
+# E   = erreurs de style de base (norme PEP 8)
+# F   = erreurs logiques : variable inutilisée, import manquant…
+# I   = imports triés dans le bon ordre
+# B   = pièges classiques de Python ("bugbear")
+# UP  = utiliser la syntaxe Python moderne
+# SIM = simplifications possibles du code
+# RUF = règles maison de ruff
+
+[tool.mypy]
+strict = true                     # vérification des types en mode le plus exigeant
+
+[tool.pytest.ini_options]         # réglages de pytest
+testpaths = ["tests"]             # les tests sont dans le dossier tests/
+addopts = "--cov=evalops --cov-branch --cov-report=term-missing --cov-fail-under=80"
+# options ajoutées automatiquement à chaque "pytest" :
+# --cov=evalops         mesurer la couverture du package evalops
+# --cov-branch          compter aussi les branches des if/else
+# --cov-report=...      afficher les lignes NON testées
+# --cov-fail-under=80   faire échouer les tests si la couverture passe sous 80 %
