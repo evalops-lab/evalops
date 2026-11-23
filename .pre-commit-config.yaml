@@ -13,7 +13,7 @@ repos:                                # liste des sources de hooks
         types: [python]
       - id: mypy                      # 3e hook : les types
         name: mypy
-        entry: uv run mypy src tests
+        entry: uv run python -m mypy src tests   # "python -m" : évite le lanceur mypy.exe, bloqué par certaines stratégies Windows
         language: system
         types: [python]
         pass_filenames: false         # mypy vérifie tout src/ et tests/, pas seulement les fichiers modifiés
